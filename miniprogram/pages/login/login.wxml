@@ -1,0 +1,24 @@
+<!--pages/login/login.wxml-->
+<!--第一个登陆页面-->
+<view class="loginPage ">
+  <!--自定义导航栏-->
+  <cu-custom bgColor="bg-gradual-blue" isBack="{{false}}">
+    <view slot="content">FOSU广场</view>
+  </cu-custom>
+
+
+ 
+  <view class="container radius shadow-warp bg-white margin-top">
+
+    <view class="cu-avatar radius margin-left xl avator" style="background-image:url(https://786c-xly-3g3sm5xb43ed094b-1305336006.tcb.qcloud.la/system/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210509105454.png?sign=3801c6780c716922fba05869a88822e6&t=1620528931);"></view>
+
+    <view class="connentInfo">
+      <view style="font-size: 17px;margin-bottom: 10px;">.申请获取以下权限</view>
+            <text class="text-grey">.获得你的公开信息(昵称，头像)</text>
+    </view>
+    <view class="userinfo1">
+      <button bindtap="getUserProfile" class="cu-btn block bg-blue lg">
+        <text class="cuIcon-weixin"></text> 授权登陆</button>
+    </view>
+  </view>
+</view>

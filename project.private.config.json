@@ -1,0 +1,120 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "db guide",
+          "pathName": "pages/databaseGuide/databaseGuide",
+          "query": ""
+        },
+        {
+          "name": "pages/test/test",
+          "pathName": "pagesi/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesi/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/put/put",
+          "pathName": "pages/put/put",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/mine",
+          "pathName": "pages/mine/mine",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/history/history",
+          "pathName": "pages/mine/history/history",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/updateLog/updateLog",
+          "pathName": "pages/mine/updateLog/updateLog",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/history/history",
+          "pathName": "pages/mine/history/history",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/detailPage/detailPage",
+          "pathName": "pages/detailPage/detailPage",
+          "query": "id=79550af2608fed2a13a4e50a6375814c&love=true",
+          "scene": null
+        },
+        {
+          "name": "pages/login/login",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/detailPage/detailPage",
+          "pathName": "pages/detailPage/detailPage",
+          "query": "id=79550af2608a5db01217477b236aa73f&love=true",
+          "scene": null
+        },
+        {
+          "name": "pages/personPage/personPage",
+          "pathName": "pages/personPage/personPage",
+          "query": "openid=oiZkF5uz7y-A3njIx-dmiVLZLNiU",
+          "scene": null
+        },
+        {
+          "name": "pages/put/put",
+          "pathName": "pages/put/put",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/mine",
+          "pathName": "pages/mine/mine",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/detailPage/detailPage",
+          "pathName": "pages/detailPage/detailPage",
+          "query": "id=28ee4e3e6097399f171317576317c08c&love=false&openid=oiZkF5p8VRKA6wu7JGE2_BHE4spk",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/setting/setting",
+          "pathName": "pages/mine/setting/setting",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/personPage/personPage",
+          "pathName": "pages/personPage/personPage",
+          "query": "openid=oiZkF5p8VRKA6wu7JGE2_BHE4spk",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

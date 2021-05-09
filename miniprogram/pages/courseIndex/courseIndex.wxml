@@ -1,0 +1,34 @@
+
+<!--自定义导航栏-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{false}}">
+    <view slot="content">FOSU广场</view>
+</cu-custom>
+<view class="works">
+	<view class="txt">今日课表</view>
+	<view>{{currentWeek}}  {{days[todayWeek-1]}}</view>
+  <navigator class="more" url="/pages/course/course">
+		<view>查看完整课表</view>
+		<view class='arrow'></view>
+	</navigator>
+
+	<navigator class="more" url="/pages/my-info/my-info">
+		<view>个人信息</view>
+		<view class='arrow'></view>
+	</navigator>
+	
+</view>
+
+<view class="course-body">
+	<view class="course-tip" wx:if="{{!myClass&&showTip}}" bindtap="toMyInfo">您未绑定班级信息，点我绑定</view>
+	<view class="course-tip" wx:elif="{{courseData.length==0&&showTip}}">{{tipStr}}</view>
+	<view class="course-list" wx:else>
+		<view class="course-contnet" wx:for="{{courseData}}" wx:for-item="course" wx:for-index="i" wx:key="_id">
+			<view class="course-contnet-title">{{time[course.beginTime-1][0]}}-{{time[course.endTime-1][1]}} {{course.name}}</view>
+			<view class="course-contnet-txt">
+			 {{course.teacher}}| {{course.place}} | {{course.weeks}}
+			</view>
+		</view>
+
+		<view class="course-explain" wx:if="{{courseData.length>0}}">由于100网的全校班级课表查询只显示第几大节，因此第二大节和第四大节都设为3小节，若与自己的课表不符，可导入个人课表纠正。</view>
+	</view>
+</view>

@@ -1,0 +1,7 @@
+<!--pages/mine/share/share.wxml-->
+<!--自定义导航栏-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">分享</view>
+</cu-custom>
+<text>pages/mine/share/share.wxml</text>

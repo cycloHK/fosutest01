@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "i-grid-item": "../grid-item/index",
+    "i-button": "../button/index",
+    "i-icon": "../icon/index"
+  }
+}

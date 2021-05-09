@@ -1,0 +1,65 @@
+<!--miniprogram/pages/detailPage/detailPage.wxml-->
+<wxs module="tools" src="/utils/filter.wxs"/>
+<!--自定义导航栏-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">详情</view>
+</cu-custom>
+<view class="allPage">
+
+  <view class="content1">
+    <i-card userName="{{content.dynamic.author.name}}" time="{{tools.timeChn(content.dynamic.time)}}" userInfo="{{content.dynamic.author.grade}} {{content.dynamic.author.place}} " thumb="{{content.dynamic.author.avatarPic}}">
+      <view slot="header" class="header" catchtap="inPersonPage" ></view>
+    </i-card>
+    <view class="textType">
+      <text selectable="true">{{content.dynamic.inputData}}</text>
+    </view>
+    <view class="imageType">
+      <view wx:for="{{content.dynamic.imgList}}" wx:for-item="image">
+        <image mode="aspectFill" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+      </view>
+    </view>
+    <view class="pra"  bindtap="dianzan" >
+      <i-icon type="{{love? 'praise_fill':'praise'}}"  />
+    <text class="praiseType text-gray">{{content.dynamic.praise}}</text>
+    <i-icon type="warning"  />
+    <text class="warnType text-gray" bindtap="warning">举报</text>
+  </view>
+  
+
+  </view>
+
+  <view class="cu-bar bg-white solid-bottom history">
+    <view class="action">
+      <text class="cuIcon-title text-blue "></text>回复（{{content.dynamic.comment.length}}）
+    </view>
+  </view>
+  <view wx:for="{{content.dynamic.comment}}"  wx:for-index="index">
+  <view class="pinglun">
+      <i-card userName="{{item.name}}" time="{{tools.timeChn(item.time)}}" userInfo="{{item.grade}}　{{item.place}}" thumb="{{item.avatarPic}}">
+    <view slot="header" class="header1" catchtap="inPersonPage1" data-openid="{{item.openid}}"></view>
+
+      </i-card>
+    <view class="textType2">
+      <text selectable="true">{{item.content}}</text>
+    </view>
+  </view>
+</view>
+
+
+
+  <view class="loadMore">
+    <i-load-more tip="没有更多了哦" loading="{{ false }}" />
+</view>
+</view>
+<view class="box">
+  <view class="cu-bar input">
+    <view class="action">
+    <!--  <text class="cuIcon-emojifill text-grey"></text>-->
+    </view>
+    <view class="pinglunBox bg-gray">
+    <textarea bindblur="bindTextAreaBlur" maxlength="1000" class="solid-bottom" auto-height   style="height: 24px;width:100%;top: 3px;"  placeholder="写下你善意的回复" bindinput="textareaAInput" value="{{searchinput}}" />
+   </view>
+    <button class="cu-btn bg-blue shadow-blur" size="mini" bindtap="formSubmit">发送</button>
+  </view>
+</view>

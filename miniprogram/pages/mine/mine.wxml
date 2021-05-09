@@ -1,0 +1,80 @@
+<!--miniprogram/pages/mine/mine.wxml-->
+
+
+<view class="topPage">
+  <image class="bgPic"
+    src="https://786c-xly-3g3sm5xb43ed094b-1305336006.tcb.qcloud.la/system/326b9a70-7630-438b-89e4-f38e8cfafa2e.jpeg?sign=9053ff06514adb83d8401bf236c54d93&t=1620052798">
+  </image>
+  <view class="userInfo">
+    <image class="userimage" src="{{userinfo.avatarPic}}"></image>
+    <view class="name">{{userinfo.name}}</view>
+    <view class="cu-item signature">
+      <view class="content " bindtap="setSignature">
+        <text class="cuIcon-writefill text-olive"></text>
+        <text class="text-grey signatureText ">{{signature}}</text>
+      </view>
+    </view>
+  </view>
+  <modal hidden="{{hiddenmodalput}}" title="设置个性签名({{signature.length}}/23)" confirm-text="完成" cancel-text="取消"
+    bindcancel="cancelM" bindconfirm="confirmM">
+    <input bindinput='iName' type='text' placeholder="请输入个性签名..." auto-focus />
+  </modal>
+
+  <view class=" waveColor shadow-blur">
+    <image
+      src="https://786c-xly-3g3sm5xb43ed094b-1305336006.tcb.qcloud.la/system/wave.gif?sign=a721847317de5b87a4d4b4b51bd1d588&t=1620052524"
+      mode="scaleToFill" class="gif-black response" style="height:55px"></image>
+  </view>
+</view>
+<view class="cu-list menu menuList">
+
+  <view class="cu-item solid-bottom arrow" bindtap="message">
+    <view class="content">
+      <text class="cuIcon-messagefill text-orange"></text>
+      <text class="text-black">消息</text>
+    </view>
+  </view>
+  <view class="cu-item solid-bottom arrow" bindtap="infoPage">
+    <view class="content">
+      <text class="cuIcon-settingsfill text-red"></text>
+      <text class="text-black">设置</text>
+    </view>
+  </view>
+  <view class="cu-item solid-bottom arrow" bindtap="historyPage">
+    <view class="content">
+      <text class="cuIcon-writefill text-mauve"></text>
+      <text class="text-black">历史动态</text>
+    </view>
+  </view>
+  <view class="cu-item solid-bottom arrow" bindtap="sharePage">
+    <view class="content">
+      <text class="cuIcon-forwardfill text-green"></text>
+      <text class="text-black">分享小程序给朋友</text>
+    </view>
+  </view>
+  <view class="cu-item solid-bottom">
+    <view class="content">
+      <text class="cuIcon-formfill text-cyan"></text>
+      <text class="text-black">学生认证(请上传学生证或校园卡照片) <text class="text-blue" style="position:relative;float:right">
+          {{userinfo.ifStudent}}</text></text>
+    </view>
+  </view>
+  <!--学生认证栏-->
+  <view class="cu-form-group" wx:if="{{userinfo.ifStudent!='已认证'}}">
+    <view class="grid col-4 grid-square flex-sub">
+      <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+        <image src='{{imgList[index]}}' mode='aspectFill'></image>
+        <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+          <text class="cuIcon-close"></text>
+        </view>
+      </view>
+      <view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<2}}">
+        <text class="cuIcon-cameraadd"></text>
+      </view>
+      <block wx:if="{{imgList.length>=1}}">
+        <button class="cu-btn round line-blue shadow upBtn" size="mini" bindtap="upButton">
+          <text class="cuIcon-upload"></text> 上传</button>
+      </block>
+    </view>
+  </view>
+</view>

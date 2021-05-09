@@ -1,0 +1,170 @@
+/* miniprogram/pages/mine/mine.wxss */
+page {
+    position: relative;
+    height: auto;
+    width: 100%;
+    background-color: white;
+}
+
+.userInfo{
+  position: fixed;
+  height: 319rpx;
+  width: 100%;
+  /* left: 0px; */
+  top: 101px;
+  transform: translate(0%,-50%);
+  z-index: 3;
+}
+.signature{
+  position: relative;
+    width: 45%;
+    top: 40%;
+    margin: 4px 0px;
+    transform: translate(100%,-50%);
+}
+.signatureText{
+  position: relative;
+  width: 200px;
+  height: auto;
+}
+.userimage {
+  position: absolute;
+    width: 150rpx;
+    height: 150rpx;
+    border: 6rpx solid white;
+    border-radius: 50%;
+    left: 32%;
+    top: 58%;
+    transform: translate(-50%,-50%);
+}
+.historyText
+{
+  position: absolute;
+    width: 61%;
+    height: auto;
+    left: 54rpx;
+    float: left;
+    overflow: hidden;
+    margin: 0 auto;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-height: 40rpx;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.menuList{
+  position: relative;
+  top:330px;
+}
+.cu-list.menu>.cu-item.arrow {
+  padding-right: 10rpx;
+}
+.name{
+  position: relative;
+  font-size: 40rpx;
+  padding: 8px 0px;
+  font-weight: 599;
+  width: 45%;
+  top: 50%;
+  transform: translate(100%,-50%);
+}
+.history{
+  position: fixed;
+  width: 100%;
+  top: 540rpx;
+  z-index: 4;
+}
+.bgPic{
+  position: fixed;
+  width: 100%;
+  height: 233px;
+  background-color: white;
+  z-index: 1;
+}
+.cu-list.menu-avatar {
+  /* overflow: hidden; */
+  height: auto;
+  position: relative;
+}
+.praAndCom{
+  position: relative;
+  right: 63rpx;
+  width: 184rpx;
+  bottom: -16rpx;
+}
+.pra{
+  position: relative;
+  float: left;
+}
+.box{
+  height: 50%;
+}
+.item{
+  position:relative;
+  top: 182rpx;
+  width: 100%;
+  height: auto;
+  border-bottom: #d9d9d9 solid 1rpx;
+  padding: 0;
+}
+.item .content{
+  background-color: #ffffff;
+  height: 100%;
+  position: relative;
+  left: 0;
+  width: 100%;
+  transition: all 0.3s;
+}
+.item .del-button {
+  position: absolute;
+  right: -140rpx;
+  width: 140rpx;
+  height: 100%;
+  background-color: #df3448;
+  color: #fff;
+  top: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+  font-size: 24rpx;
+}
+.item.active .content{
+  left: -140rpx;
+}
+.item.active .del-button{
+  right: 0;
+}
+.shadow-blur {
+  position: fixed;
+  width: 100%;
+  top: -62rpx;
+  height: 44%;
+}
+.bgWare
+{
+  position: fixed;
+  width: 100%;
+  height: 460rpx;
+  top: 0rpx;
+}
+.response {
+  width: 100%;
+  height: 460rpx;
+}
+.shadow-blur {
+  /* FONT-WEIGHT: 200; */
+  position: fixed;
+  width: 100%;
+  top: 233px;
+  z-index: 20;
+  height: 55px;
+}
+.waveColor{
+  background-color:#beebff ;
+}

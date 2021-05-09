@@ -1,0 +1,47 @@
+<!--miniprogram/pages/personPage/personPage.wxml-->
+<wxs module="tools" src="/utils/filter.wxs" />
+<!--自定义导航栏-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">{{userinfo.userinfo.name}}的主页</view>
+</cu-custom>
+<view class="topPage">
+  <image class="bgPic"
+    src="https://786c-xly-3g3sm5xb43ed094b-1305336006.tcb.qcloud.la/system/326b9a70-7630-438b-89e4-f38e8cfafa2e.jpeg?sign=9053ff06514adb83d8401bf236c54d93&t=1620052798">
+  </image>
+  <view class="userInfo">
+    <image class="userimage" src="{{userinfo.userinfo.avatarPic}}"></image>
+    <view class="name">{{userinfo.userinfo.name}}</view>
+    <view class="cu-item signature">
+      <view class="content " >
+        <text class="text-grey signatureText ">{{userinfo.signature}}</text>
+      </view>
+    </view>
+  </view>
+  <view class=" waveColor shadow-blur">
+    <image
+      src="https://786c-xly-3g3sm5xb43ed094b-1305336006.tcb.qcloud.la/system/wave.gif?sign=a721847317de5b87a4d4b4b51bd1d588&t=1620052524"
+      mode="scaleToFill" class="gif-black response" style="height:55px"></image>
+  </view>
+</view>
+
+
+<view class="cu-bar bg-white solid-bottom historyCard">
+  <view class='action'>
+    <text class='cuIcon-titles text-orange '></text>动态
+  </view>
+</view>
+
+<view class="cu-card dynamic dynamicCard shadow shadow-lg " wx:for="{{historyDymaic}}" wx:for-index="index" bindtap="inDetail" data-id="{{item._id}}">
+  <view class="cu-item shadow">
+    <view class="text-content">{{item.dynamic.inputData}}</view>
+    <view wx:if="{{item.dynamic.imgList.length}}">
+    <image src="{{item.dynamic.imgList[0]}}" class="bg-img only-img" mode="aspectFill"></image>
+   </view>
+    <view class="text-gray text-sm text-right "> 
+      <text class="timeType" >{{tools.timeChn(item.dynamic.time)}}</text>
+      <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{item.dynamic.praise}}
+      <text class="cuIcon-messagefill margin-lr-xs"></text>{{item.dynamic.comment.length}}
+    </view>
+  </view>
+</view>

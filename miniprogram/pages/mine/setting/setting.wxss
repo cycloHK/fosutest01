@@ -1,0 +1,21 @@
+/* miniprogram/pages/setting/setting.wxss */
+
+.allPage {
+  position: relative;
+}
+
+.upBtn {
+  position: absolute;
+  margin: 57rpx 0rpx;
+  right: 25rpx;
+}
+
+.textType {
+  position: relative;
+  float: right;
+}
+
+.iconText {
+  position: relative;
+  left: 25rpx;
+}
