@@ -2,6 +2,7 @@
 
 const app = getApp()
 const db = wx.cloud.database()
+var path="";
 
 Page({
 
@@ -13,12 +14,17 @@ Page({
     userData: {},
   },
   onLoad: function (options) {
-  
+  console.log("options",options)
+  path=options.loud;
    this.setData({
     userData:app.globalData
    })
   },
-
+  backToIndex(){
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
   //获取用户微信信息
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
@@ -66,9 +72,30 @@ Page({
         duration: 3000
       });
      })
-     wx.switchTab({
-      url: '/pages/index/index'
-    })
+     if(path=="put")
+     {
+      wx.switchTab({
+        url: '/pages/put/put?login='+true
+      })
+     }
+     if(path=="mine")
+     {
+      wx.switchTab({
+        url: '/pages/mine/mine?login='+true
+      })
+     }
+     if(path=="setting")
+     {
+      wx.navigateBack({
+        delta: 0,
+      })
+     }
+     if(path=="detailPage")
+     {
+       wx.navigateBack({
+         delta: 0,
+       })
+     }
    },
 
   /**

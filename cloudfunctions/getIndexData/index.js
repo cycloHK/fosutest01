@@ -27,4 +27,5 @@ exports.main = async (event, context) => {
   {
     return await db.collection("dynamic").where({_openid:event.persionOpenid}).orderBy("dynamic.time", "desc").skip(page).limit(num).get()
   }
+  
 }

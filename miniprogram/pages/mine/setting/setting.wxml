@@ -58,37 +58,6 @@
         </picker>
       </view>
     </view>
-    <view class="cu-item  arrow">
-      <view class="content">
-        <picker bindchange="selectDepartment"
-    value="{{departmentsIndex}}" range="{{departments}}">
-          <text class="cuIcon-newsfill text-grey" style="color:green;position:relative;left:10rpx;"></text>
-          <text class="text-grey" class="iconText text-grey">学院</text>
-          <text class="textType text-grey">{{myDepartment}}</text>
-        </picker>
-      </view>
-    </view>
-    <view class="cu-item  arrow">
-      <view class="content">
-        <picker bindchange="selectGrade"
-    value="{{gradesIndex}}" range="{{grades}}">
-          <text class="cuIcon-newsfill text-grey" style="color:green;position:relative;left:10rpx;"></text>
-          <text class="text-grey" class="iconText text-grey">年级</text>
-          <text class="textType text-grey">{{myGrade}}</text>
-        </picker>
-      </view>
-    </view>
-    <view class="cu-item  arrow">
-      <view class="content">
-        <picker bindchange="selectClass"
-    value="{{classesIndex}}" range="{{classes}}">
-          <text class="cuIcon-newsfill text-grey" style="color:green;position:relative;left:10rpx;"></text>
-          <text class="text-grey" class="iconText text-grey">班级</text>
-          <text class="textType text-grey">{{myClass}}</text>
-        </picker>
-      </view>
-    </view>
-
   </view>
 
   <view class="cu-bar bg-white solid-bottom margin-top">

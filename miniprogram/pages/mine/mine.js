@@ -3,6 +3,7 @@ const { $Message } = require('../../dist/base/index');
 const app = getApp()
 const db = wx.cloud.database()
 var arrList = [];
+var login=true;
 Page({
   data: {
     signature:'',
@@ -21,15 +22,35 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
   },
-
+  //获取用户_id
+  getUserId() {
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {}
+    }).then((res) => {
+      db.collection("usersInfformation").where({
+        _openid: res.result.openid
+      }).get().then((res) => {
+        console.log("res.data",res.data)
+        if (res.data.length == 0) {
+         login=false;
+         console.log("看看登陆状态",login)
+        }
+        else{
+          login=true;
+          this.getUserInfo();
+        }
+      })
+    });
+  },
 
   //生命周期函数--监听页面加载！！！！！！！！！！！！！！
   onLoad: function (options) {
-    this.getUserInfo();
+    this.getUserId();
   },
   getUserInfo() {
     //调用云函数登录
-    wx.cloud.callFunction({
+      wx.cloud.callFunction({
       name: 'login',
       data: {}
     }).then((res) => {
@@ -38,15 +59,14 @@ Page({
         _openid: res.result.openid
       }).get().then((res) => {
         console.log("res.data=", res.data[0])
-        this.setData({
-          iflogin: res.data[0].iflogin,
-          userinfo: res.data[0].userinfo,
-          signature:res.data[0].signature,
-        })
-        console.log("我的页面头像", this.data.userinfo.avatarPic)
+        if(login)
+        {
+          this.setData({
+            userinfo: res.data[0].userinfo,
+            signature:res.data[0].signature,
+          })
+        }
       })
-
-
     });
   },
   /**
@@ -216,7 +236,7 @@ Page({
   },
   cloudFileIfStudent(fileName, path) {
     wx.showLoading({
-      title: '图片上传中',
+      title: '图片加载中',
     })
     wx.cloud.uploadFile({
       cloudPath: "ifStudent/" + fileName + ".jpg",
@@ -287,7 +307,17 @@ Page({
     })
   },
   upButton: function () {
-   this.upIfStudentData();
+    if(login)
+    {
+      this.upIfStudentData();
+    }
+    else
+    {
+      login=true;
+      wx.navigateTo({
+        url: '../login/login?loud='+"mine",
+      })
+    }
   },
   //修改签名
   setSignature: function () {

@@ -184,7 +184,7 @@ async function getCurrentWeek(termStr) {
   let date = new Date();
   let currentWeek = -1
   if (!app.globalData.currentWeek) {
-    await db.collection('courses')
+    await db.collection('system')
     .doc('dateStartId123')
     .get().then(res => {
       // res.data 包含该记录的数据

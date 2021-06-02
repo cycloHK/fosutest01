@@ -3,6 +3,7 @@ const db = wx.cloud.database()
 const app = getApp()
 var listLenFind = 0;//记录"发现"页面列表长度
 var listLenHot = 0;//记录"热榜"页面列表长度
+var login = true;
 Page({
   data: {
     love: false,
@@ -27,16 +28,14 @@ Page({
       connent: []
     })
     this.loadData(7, 0);
-    console.log("onload被执行") 
+    console.log("onload被执行")
     this.getSwiperList();
     this.getUserId();
   },
-  /**
-   * 生命周期函数--监听页面显示
-   */
+
   onShow: function () {
     console.log("onshow被执行")
-  
+
   },
   onReady: function () {
     console.log("onready被执行")
@@ -97,10 +96,10 @@ Page({
       success: (res) => {
         console.log(res)
         this.setData({
-          "userData.userinfo.name":res.userInfo.nickName,
-          "userData.userinfo.avatarPic":res.userInfo.avatarUrl,
-          avatarPic:res.userInfo.avatarUrl,
-         "userData.userinfo.sex":(res.userInfo.gender? '男':'女'),
+          "userData.userinfo.name": res.userInfo.nickName,
+          "userData.userinfo.avatarPic": res.userInfo.avatarUrl,
+          avatarPic: res.userInfo.avatarUrl,
+          "userData.userinfo.sex": (res.userInfo.gender ? '男' : '女'),
         })
       }
     })
@@ -115,9 +114,7 @@ Page({
         _openid: res.result.openid
       }).get().then((res) => {
         if (res.data.length == 0) {
-          wx.navigateTo({
-            url: '/pages/login/login',
-          })
+          login = false;
         }
         else {
           this.setData({
@@ -182,7 +179,7 @@ Page({
     this.setData({
       connent: dataWithPraise
     })
-    console.log("squarelove",this.data.connent)
+    console.log("squarelove", this.data.connent)
   },
   //加载热榜点赞数据
   async getHotPraise() {
@@ -191,25 +188,28 @@ Page({
       hot: dataWithPraise
     })
   },
-  //添加点赞标记
-  async love(e) {
-    var l = e.length
-    for (var i = 0; i < l; i++) {
-      var yn = e[i].dynamic.praiserId.indexOf(this.data.userId)
-      if (yn == -1) {
-        e[i].love = false
-      } else {
-        e[i].love = true
-      }
+ //添加点赞标记
+ async love(e) {
+  var l = e.length
+  for (var i = 0; i < l; i++) {
+    console.log('e=',e)
+    //var yn = e[i].dynamic.praiserId.indexOf(this.data.userId)
+    //这个页面修改的地方（1）：
+    var yn = e[i].dynamic.praiserId.indexOf(app.globalData.openid)
+    if (yn == -1) {
+      e[i].love = false
+    } else {
+      e[i].love = true
     }
-    return e
-  },
+  }
+  return e
+},
 
 
   //点赞更新数据库
   dianzan(e) {
     console.log("点了")
-    var _id = this.data.userId
+    //var _id = this.data.userId
     var id = e.currentTarget.dataset.id
     var index = e.currentTarget.dataset.index
     this.showPraise(index);
@@ -217,7 +217,7 @@ Page({
       name: "praise",
       data: {
         id: id,
-        dzrid: _id
+        dzrid: app.globalData.openid 
       }
     })
   },
@@ -276,17 +276,17 @@ Page({
 
   //进入详情页
   inDetail: function (e) {
-    console.log("跳转至详情页携带数据",e)
+    console.log("跳转至详情页携带数据", e)
     var love = e.currentTarget.dataset.index
     wx.navigateTo({
       url: '../detailPage/detailPage?id=' + e.currentTarget.dataset.id + '&love=' + love + '&openid=' + e.currentTarget.dataset.openid,
     })
   },
-  inPersonPage: function (e){
+  inPersonPage: function (e) {
     console.log("进入个人主页")
-    console.log("该用户的openid",e.currentTarget.dataset.openid)
+    console.log("该用户的openid", e.currentTarget.dataset.openid)
     wx.navigateTo({
-      url: '../personPage/personPage?openid='+e.currentTarget.dataset.openid,
+      url: '../personPage/personPage?openid=' + e.currentTarget.dataset.openid,
     })
   }
 });

@@ -3,13 +3,13 @@
 var fileid='';
 const app = getApp()
 const db = wx.cloud.database()
+var login=true;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
     avatorimg:'',
     showModal: true,
     index: null,
@@ -19,27 +19,36 @@ Page({
     indexSex: 0,
     pickerplace: ['仙溪校区', '江湾校区', '河滨校区'],
     indexPlace: 0,
-    myClass: '',
-    myDepartment: '请选择学院',
-    myGrade: '请选择年级',
-    departments:[],
-    departmentsIndex: 0,
-    grades: [],
-    gradesIndex: 0,
-    classesObject:{},
-    classes: ['请先选择学院与年级'],
-    classesIndex: 0,
-    count:0
+    
   },
 
-  
+  //获取用户_id
+  getUserId() {
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {}
+    }).then((res) => {
+      db.collection("usersInfformation").where({
+        _openid: res.result.openid
+      }).get().then((res) => {
+        if (res.data.length == 0) {
+         login=false;
+        }
+        else
+        {
+          login=true;
+          this.getUserInfo();
+        }
+      })
+    });
+  },
    //生命周期函数--监听页面加载！！！！！！！！！！！！！！
    onLoad: function (options) {
-    this.getUserInfo();
-    this.getDepartment();
+    console.log("setting 页面options",options)
+    login=options.login;
+    this.getUserId()
   },
   onShow:function(){
-  
   },
   onPullDownRefresh: function () {
     this.getUserInfo();
@@ -50,18 +59,11 @@ Page({
       duration: 800
     })
   },
- getDepartment(){
-    db.collection("studentInfo").get()
-    .then((res)=>{
-      this.setData({
-        classesObject:res.data[0].classesObject,
-        departments:res.data[0].departments,
-        grades:res.data[0].grades
-      })
-    })
- },
+
   getUserInfo() {
-    //调用云函数登录
+    if(login)
+    {
+      //调用云函数登录
     wx.cloud.callFunction({
       name: 'login',
       data: {}
@@ -71,14 +73,11 @@ Page({
       }).get().then((res) => {
         this.setData({
           userinfo: res.data[0].userinfo,
-          myClass:res.data[0].userinfo.class,
-          myDepartment:res.data[0].userinfo.department,
-          myGrade:res.data[0].userinfo.grade
-
         })
         console.log("用户信息",this.data.userinfo)
       })
     });
+  }
   },
   //文本内容合法性检测
   async checkStr(text) {
@@ -187,9 +186,19 @@ Page({
   },
   //修改名称
   setName: function () {
-    this.setData({
-      hiddenmodalput: false
-    })
+    if(login)
+    {
+      this.setData({
+        hiddenmodalput: false
+      })
+    }
+    else
+    {
+      login=true;
+      wx.navigateTo({
+        url: '../../login/login?loud='+"setting",
+      })
+    }
   },
   cancelM: function (e) {
     this.setData({
@@ -197,41 +206,43 @@ Page({
     })
   },
   async confirmM (e) {
+    
     var strOK = await this.checkText();
     if(strOK)
     {
-      wx.showLoading({
-        title: '上传中...',
-      })
-      //上传修改数据
-      wx.cloud.callFunction({
-        name: 'login',
-        data: {}
-      }).then((res) => {
-        db.collection("usersInfformation").where({
-          _openid: res.result.openid
-        }).update({
-          data: {
-            userinfo: {
-              name: this.data.userinfo.name
-            }
-          }
-        }).then((res) => {
+      
+        wx.showLoading({
+          title: '上传中...',
         })
-        db.collection('dynamic').where({
-          _openid: res.result.openid
-        }).update({
-          data:{
-            dynamic:{
-              author:{
+        //上传修改数据
+        wx.cloud.callFunction({
+          name: 'login',
+          data: {}
+        }).then((res) => {
+          db.collection("usersInfformation").where({
+            _openid: res.result.openid
+          }).update({
+            data: {
+              userinfo: {
                 name: this.data.userinfo.name
               }
             }
-          }
-        }).then(res=>{
-          wx.hideLoading({})
-        })
-      });
+          }).then((res) => {
+          })
+          db.collection('dynamic').where({
+            _openid: res.result.openid
+          }).update({
+            data:{
+              dynamic:{
+                author:{
+                  name: this.data.userinfo.name
+                }
+              }
+            }
+          }).then(res=>{
+            wx.hideLoading({})
+          })
+        });
     }
    
     this.setData({
@@ -249,7 +260,9 @@ Page({
     this.setData({
       "userinfo.sex": this.data.pickersex[e.detail.value]
     })
-    //上传修改数据
+    if(login)
+    {
+       //上传修改数据
     wx.cloud.callFunction({
       name: 'login',
       data: {}
@@ -276,6 +289,15 @@ Page({
         }
       })
     });
+    }
+    else
+    {
+      login=true;
+      wx.navigateTo({
+        url: '../../login/login?loud='+"setting",
+      })
+    }
+   
   },
   PickerChange(e) {
     console.log(e);
@@ -288,7 +310,9 @@ Page({
     this.setData({
       "userinfo.place": this.data.pickerplace[e.detail.value]
     })
-    //上传修改数据
+    if(login)
+    {
+       //上传修改数据
     wx.cloud.callFunction({
       name: 'login',
       data: {}
@@ -315,6 +339,14 @@ Page({
         }
       })
     });
+    }
+    else{
+      login=true;
+      wx.navigateTo({
+        url: '../../login/login?loud='+"setting",
+      })
+    }
+   
   },
 
   cancel: function () {
@@ -330,17 +362,28 @@ Page({
   },
 
   changeAvatarPic() {
-    wx.chooseImage({
-      count: 1, // 默认9     
-      sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
-      success: res => {
-        this.setData({
-          showModal: false,
-        })
-        this.cloudFile(res.tempFilePaths[0])
-      }
-    })
+    if(login)
+    {
+      wx.chooseImage({
+        count: 1, // 默认9     
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: res => {
+          this.setData({
+            showModal: false,
+          })
+          this.cloudFile(res.tempFilePaths[0])
+        }
+      })
+    }
+    else
+    {
+      login=true;
+      wx.navigateTo({
+        url: '../../login/login?loud='+"setting",
+      })
+    }
+    
   },
 
   cloudFile(path) {
@@ -395,133 +438,6 @@ Page({
     })
   });
   }
-  },
-  selectDepartment: function (e) {
-    console.log(e)
-    let departmentsIndex = e.detail.value
-    let department = this.data.departments[departmentsIndex]
-    let grade = this.data.grades[0]
-    let classesObject = this.data.classesObject
-    let classes = classesObject[department + grade]
-    console.log(department+grade)
-    if (!classes) {
-      console.log(classes)
-      classes = ['该学院年级无班级数据']
-    }
-    this.setData({
-      departmentsIndex,
-      classes,
-      classesIndex: 0,
-      myClass: classes[0],
-      myDepartment: department,
-      myGrade:grade,
-      gradesIndex:0
-    })
-     //上传修改数据
-     wx.cloud.callFunction({
-      name: 'login',
-      data: {}
-    }).then((res) => {
-      db.collection("usersInfformation").where({
-        _openid: res.result.openid
-      }).update({
-        data: {
-          userinfo: {
-            department: this.data.myDepartment
-          }
-        }
-      }).then((res) => {
-      })
-      db.collection('dynamic').where({
-        _openid: res.result.openid
-      }).update({
-        data:{
-          dynamic:{
-            author:{
-              department: this.data.myDepartment
-            }
-          }
-        }
-      })
-    });
-  },
-  selectGrade: function (e) {
-    let gradesIndex = e.detail.value
-    let grade = this.data.grades[gradesIndex]
-    let department = this.data.departments[this.data.departmentsIndex]
-    let classes = this.data.classesObject[department + grade]
-    if (!classes) {
-      console.log(classes)
-      classes = ['该学院年级无班级数据']
-    }
-    this.setData({
-      gradesIndex,
-      classes,
-      myClass: classes[0],
-      classesIndex: 0,
-      myGrade: grade
-    })
-     //上传修改数据
-     wx.cloud.callFunction({
-      name: 'login',
-      data: {}
-    }).then((res) => {
-      db.collection("usersInfformation").where({
-        _openid: res.result.openid
-      }).update({
-        data: {
-          userinfo: {
-            grade: this.data.myGrade
-          }
-        }
-      }).then((res) => {
-      })
-      db.collection('dynamic').where({
-        _openid: res.result.openid
-      }).update({
-        data:{
-          dynamic:{
-            author:{
-              grade: this.data.myGrade
-            }
-          }
-        }
-      })
-    });
-  },
-  selectClass: function (e) {
-    let myClass = this.data.classes[e.detail.value]
-    this.setData({
-      classesIndex: e.detail.value,
-      myClass:myClass,
-    })
-    //上传修改数据
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {}
-    }).then((res) => {
-      db.collection("usersInfformation").where({
-        _openid: res.result.openid
-      }).update({
-        data: {
-          userinfo: {
-            class:this.data.myClass
-          }
-        }
-      }).then((res) => {
-      })
-      db.collection('dynamic').where({
-        _openid: res.result.openid
-      }).update({
-        data:{
-          dynamic:{
-            author:{
-              class:this.data.myClass
-            }
-          }
-        }
-      })
-    });
   },
 
 })

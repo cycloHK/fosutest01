@@ -35,7 +35,6 @@ exports.main = async (event, context) => {
           myClass: event.myClass,
           myDepartment: event.myDepartment,
           myGrade: event.myGrade,
-          userInfo:event.userInfo,
           count:1           //测试用设置为 1  原为：event.userInfo.count
         }
       })

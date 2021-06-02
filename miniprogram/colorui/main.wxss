@@ -1917,6 +1917,7 @@ button.icon.lg {
 .cu-custom {
 	display: block;
 	position: relative;
+	z-index: 10;
 }
 
 .cu-custom .cu-bar .content {

@@ -6,6 +6,7 @@ const db = wx.cloud.database()
 var filePath = [];
 var strOk = 0;
 var imgOk = 0;
+var login=true;
 Page({
   data: {
     searchinput: '',
@@ -29,21 +30,56 @@ Page({
     }
   },
 
+  
   //生命周期函数--监听页面加载！！！！！！！！！！！！！！
   onLoad: function (options) {
-    //调用云函数登录
+    console.log("options",options)
+    login=options.login;
+    this.getUserId()
+  },
+  
+  onShow:function (){
+    this.getUseDate();
+    this.getUserId()
+  },
+  getUseDate(){
+      //调用云函数登录
+      wx.cloud.callFunction({
+        name: 'login',
+        data: {}
+      }).then((res) => {
+        console.log("获取到openid:", res.result.openid);
+        db.collection("usersInfformation").where({
+          _openid: res.result.openid
+        }).get().then((res) => {
+          app.globalData = res.data[0]
+          if(login)
+          {
+            this.setData({
+            "dynamic.author": app.globalData.userinfo,
+          })
+         }
+        })
+      });
+  },
+  //获取用户_id
+  getUserId() {
     wx.cloud.callFunction({
       name: 'login',
       data: {}
     }).then((res) => {
-      console.log("获取到openid:", res.result.openid);
       db.collection("usersInfformation").where({
         _openid: res.result.openid
       }).get().then((res) => {
-        app.globalData = res.data[0]
-        this.setData({
-          "dynamic.author": app.globalData.userinfo,
-        })
+        console.log("res.data",res.data) 
+        if (res.data.length == 0) {
+         login=false;
+         console.log("看看登陆状态",login)
+        }
+        else{
+          login=true;
+          this.data.dynamic.author= res.data[0];
+        }
       })
     });
   },
@@ -273,7 +309,18 @@ Page({
   },
   //上传按钮
   formSubmit: function (e) {
-    this.pushdynamicData();
+    if(login)
+    {
+      this.pushdynamicData();
+    }
+    else
+    {
+      login=true;
+      wx.navigateTo({
+        url: '../login/login?loud='+"put",
+      })
+      
+    }
   },
 
 

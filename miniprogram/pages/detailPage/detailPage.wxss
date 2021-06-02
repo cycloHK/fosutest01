@@ -12,7 +12,7 @@
 }
 .pinglunBox
 {
-  padding: 6px 15px;
+  padding: 9px 15px;
   position: fixed;
   width: 74%;
   left: 25px;
@@ -25,7 +25,7 @@
   margin: -10px;
   width: 83%;
   height: 45px;
-  z-index: 10;
+  z-index: 1;
 }
 .header1{
   position: relative;
@@ -34,6 +34,19 @@
   height: 45px;
   z-index: 10;
 }
+.huifuLen{
+  position: relative;
+    background-color: #f5f5f5;
+    width: 91.5%;
+    overflow: auto;
+    height: auto;
+    border-radius: 3px;
+    top: -18px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0rpx 10rpx;
+    line-height: 50rpx;
+}
 .content1
 {
   position: relative;
@@ -41,6 +54,14 @@
   height: auto;
   background-color: white;
  /* background-color: tomato;*/
+}
+.cu-bar {
+  display: flex;
+  position: relative;
+  align-items: center;
+  min-height: 120rpx;
+  width: 100%;
+  justify-content: space-between;
 }
 .textType{
   position: relative;
@@ -96,8 +117,9 @@
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  padding:0rpx 29rpx;
+  padding:0rpx 31rpx;
   line-height: 50rpx;
+  margin-bottom: 10px;
 }
 
 .praiseType{
@@ -123,6 +145,7 @@
 }
 .box {  
   position: fixed;
+  z-index: 10;
   width: 100%;
   bottom: 0rpx;
   margin: 0rpx 0;
@@ -303,6 +326,19 @@
   100% {
     padding-left: 15px;
   }
+}
+.huifuType{
+  position: relative;
+  background-color: #f5f5f5;
+  width: 91.5%;
+  overflow: auto;
+  height: auto;
+  border-radius: 3px;
+  top: -18px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0rpx 10rpx;
+  line-height: 50rpx;
 }
 
 

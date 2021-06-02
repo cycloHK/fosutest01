@@ -1,5 +1,6 @@
 const db = wx.cloud.database()
 const app = getApp()
+
 Page({
 
   /**
@@ -18,6 +19,7 @@ Page({
     classesIndex: 0,
     count:0
   },
+   
   selectDepartment: function (e) {
     let departmentsIndex = e.detail.value
     let department = this.data.departments[departmentsIndex]
@@ -63,11 +65,7 @@ Page({
     })
   },
   saveInfo: function (e) {
-    console.log("e.detail.userInfo",e.detail.userInfo)
-    let userInfo=e.detail.userInfo
-    if(!e.detail.userInfo){
-      userInfo={}
-    }
+   
     let data = this.data
     let myClass = data.myClass
     let myDepartment = data.myDepartment
@@ -85,7 +83,6 @@ Page({
           myClass,
           myDepartment,
           myGrade,
-          userInfo
         }
       }).then(res => {
         console.log("res.result",res.result)
@@ -126,6 +123,9 @@ Page({
       })
       // console.log(data)
     }
+      
+  
+ 
   },
   /**
    * 生命周期函数--监听页面加载

@@ -181,7 +181,7 @@ async function getCurrentWeek(termStr){
   let date = today;
   let currentWeek=-1
   //在数据库获取学期开始时间
-  await db.collection('courses')
+  await db.collection('system')
   .doc('dateStartId123')
   .get().then(res => {
     // res.data 包含该记录的数据
@@ -194,6 +194,13 @@ async function getCurrentWeek(termStr){
 
 async function getTodayCourse(myClass,term){
   let status=true
+
+
+  if(!app.globalData.currentWeek){
+    app.globalData.currentWeek=await getCurrentWeek(term);   //如果没有week则获取
+  }
+  let currentWeek=app.globalData.currentWeek;
+
   if(todayCourseList.length==0||todayCourseList[0].class!=myClass){
    console.log('获取今日课表')
     let day=today.getDay();
@@ -202,10 +209,10 @@ async function getTodayCourse(myClass,term){
     if(day==0){
       day=7;           //可能修改星期日
     }
-    if(!app.globalData.currentWeek){
-      app.globalData.currentWeek=await getCurrentWeek(term);   //如果没有week则获取
-    }
-    let currentWeek=app.globalData.currentWeek;
+    // if(!app.globalData.currentWeek){
+    //   app.globalData.currentWeek=await getCurrentWeek(term);   //如果没有week则获取
+    // }
+    // let currentWeek=app.globalData.currentWeek;
     let coursesList=await getMyCourse(myClass,term,false);
     let todayCourse=[];
     if(coursesList.length==0){
@@ -236,6 +243,7 @@ async function getTodayCourse(myClass,term){
   }
   
   console.log("todayCourseList:",todayCourseList)
+  console.log("函数内：",app.globalData.currentWeek)
   return {
     todayCourseList:todayCourseList,
     status:status,
@@ -345,18 +353,21 @@ Page({
         if(!res.status){
           tipStr='暂无您的班级课程数据'
         }
-        let currentWeek='第'+res.currentWeek+'周'
+        let currentWeek='第'+res.currentWeek+'周'   
+
+        console.log("测试undefined----->",currentWeek)
+
         if(res.currentWeek>19||res.currentWeek<1){
           tipStr='放假中...'
           currentWeek=''
         }
-        
+        console.log("+++++测试undefined>",currentWeek)
         console.log('TodayCourse:',res)
         that.setData({
           showTip:true,
           courseData:res.todayCourseList,
           tipStr,
-          currentWeek
+          currentWeek         //undefine 的问题应该在这
         })
       }).catch(e=>{
         console.log(e)

@@ -39,7 +39,25 @@ App({
       loginTime:'',
     }
 
-    
+    if(wx.getStorageSync('openid')){
+            this.globalData.openid = wx.getStorageSync('openid')
+            console.log(this.globalData.openid)
+          }
+          var that = this;
+          wx.cloud.callFunction({
+            name: 'login',
+            data: {},
+            success: res => {
+              console.log('[云函数] [login] user openid: ', res.result.openid)
+              that.globalData.openid = res.result.openid
+              wx.setStorageSync('openid', res.result.openid)
+            },
+            fail: err => {
+              console.error('[云函数] [login] 调用失败', err)
+            }
+          })
+    //这里已经获取到用户的openid，并存入缓存，所以其他用到openid的页面不需要再通过云函数获取，直接用全局变量app.globalData.openid就可以
+
     wx.getSystemInfo({
     success: e => {
       this.globalData.StatusBar = e.statusBarHeight;
