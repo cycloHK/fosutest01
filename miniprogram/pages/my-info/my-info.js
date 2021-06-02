@@ -1,3 +1,5 @@
+//DEV的修改myinfo
+
 const db = wx.cloud.database()
 const app = getApp()
 
@@ -40,6 +42,12 @@ Page({
       gradesIndex:0
     })
   },
+
+  selectsex: function (e) {
+   
+  },
+
+
   selectGrade: function (e) {
     let gradesIndex = e.detail.value
     let grade = this.data.grades[gradesIndex]
@@ -49,13 +57,11 @@ Page({
       console.log(classes)
       classes = ['该学院年级无班级数据']
     }
-    this.setData({
-      gradesIndex,
-      classes,
-      myClass: classes[0],
-      classesIndex: 0,
-      myGrade: grade
-    })
+     let sex = -1
+    if (sex = 0) {
+    	sex = "男"
+    }
+ 
   },
   selectClass: function (e) {
     let myClass = this.data.classes[e.detail.value]
